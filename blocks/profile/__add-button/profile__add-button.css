@@ -4,10 +4,14 @@
   border-radius: 2px;
   border: 2px solid #ffffff;
   transition: opacity 0.5s linear;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .profile__add-button:hover {
   opacity: 0.6;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
