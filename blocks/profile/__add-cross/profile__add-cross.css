@@ -1,7 +1,7 @@
 .profile__add-cross {
   width: 16px;
   height: 16px;
-  background-image: url(../../../images/Add-Button.svg);
+  background-image: url(../../../images/cross.svg);
   background-size: contain;
   background-position: center;
 }

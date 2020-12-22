@@ -1,0 +1,9 @@
+.overlay__popup-margin {
+  margin-top: 123px;
+}
+
+@media screen and (min-width: 768px) {
+  .overlay__popup-margin {
+    margin-top: 195px;
+  }
+}
