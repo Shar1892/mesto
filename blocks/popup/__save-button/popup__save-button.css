@@ -9,6 +9,13 @@
   align-items: center;
   border-radius: 2px;
   transition: opacity 0.5s linear;
+  font-family: "inter";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  -webkit-font-smoothing: antialiased;
+  color: #ffffff;
 }
 
 .popup__save-button:hover {
@@ -20,5 +27,7 @@
   .popup__save-button {
     height: 50px;
     margin-top: 48px;
+    font-size: 18px;
+    line-height: 22px;
   }
 }

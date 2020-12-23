@@ -1,4 +1,4 @@
-.popup__form-name {
+.popup__input {
   border: 0;
   width: 100%;
   font-family: "inter";
@@ -14,10 +14,10 @@
   font-size: 14px;
 }
 
-.popup__form-name:focus {
+.popup__input:focus {
   outline-color: rgba(0, 0, 0, 0.2);
 }
 
-.popup__form-name:first-of-type {
+.popup__input:first-of-type {
   margin-bottom: 20px;
 }
