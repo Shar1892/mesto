@@ -9,7 +9,7 @@
   .elements {
     width: 581px;
     grid-template-columns: repeat(2, 1fr);
-    gap: 17px 20px;
+    gap: 20px 17px;
   }
 }
 
@@ -17,6 +17,6 @@
   .elements {
     width: 880px;
     grid-template-columns: repeat(3, 1fr);
-    gap: 17px 20px;
+    gap: 20px 17px;
   }
 }
