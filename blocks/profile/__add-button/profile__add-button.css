@@ -7,6 +7,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
+  background-color: #000000;
+  outline: 0;
 }
 
 .profile__add-button:hover {

@@ -6,6 +6,10 @@
   background-size: contain;
   background-position: center;
   transition: opacity 0.5s linear;
+  padding: 0;
+  border: 0;
+  background-color: #000000;
+  outline: 0;
 }
 
 

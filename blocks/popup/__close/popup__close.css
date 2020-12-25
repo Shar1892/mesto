@@ -9,6 +9,10 @@
   position: absolute;
   top: -45px;
   right: 5px;
+  padding: 0;
+  border: 0;
+  background-color:  rgba(0, 0, 0, 0);
+  outline: 0;
 }
 
 .popup__close:hover {
