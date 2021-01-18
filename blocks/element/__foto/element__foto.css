@@ -2,3 +2,7 @@
   height: 282px;
   width: 282px;
 }
+
+.element__foto:hover {
+  cursor: pointer;
+}

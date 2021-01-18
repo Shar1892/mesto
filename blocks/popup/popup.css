@@ -1,5 +1,7 @@
 .popup {
-  display: none;
+  /*display: none;*/
+  display: flex;
+  visibility: hidden;
   justify-content: center;
   align-items: center;
   position: fixed;
