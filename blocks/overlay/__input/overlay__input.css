@@ -1,4 +1,4 @@
-.popup__input {
+.overlay__input {
   border: 0;
   width: 100%;
   font-family: 'Inter', Arial, sans-serif;
@@ -15,10 +15,10 @@
   padding: 0;
 }
 
-.popup__input:focus {
+.overlay__input:focus {
   outline-color: rgba(0, 0, 0, 0.2);
 }
 
-.popup__input:first-of-type {
+.overlay__input:first-of-type {
   margin-bottom: 20px;
 }

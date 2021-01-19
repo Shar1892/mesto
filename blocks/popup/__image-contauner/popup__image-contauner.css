@@ -1,8 +1,0 @@
-.popup__image-contauner {
-  max-width: 75vw;
-  max-height: 75vh;
-  position: relative;
-  visibility: hidden;
-  transition: visibility 0.5s, opacity 0.5s linear;
-  opacity: 0;
-}

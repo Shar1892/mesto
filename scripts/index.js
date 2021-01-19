@@ -1,32 +1,31 @@
-const popup = document.querySelector('.popup');
+const overlay = document.querySelector('.overlay');
 
 const editProfileButton = document.querySelector('.profile__edit-button');
 const addPlaceButton = document.querySelector('.profile__add-button');
 
-const editProfileCloseButton = popup.querySelector('.popup__close_type_profile');
-const addPlaceCloseButton = popup.querySelector('.popup__close_type_place');
-const imageContainerCloseButton = popup.querySelector('.popup__close_type_image');
+const editProfileCloseButton = overlay.querySelector('.overlay__close_type_profile');
+const addPlaceCloseButton = overlay.querySelector('.overlay__close_type_place');
+const imageContainerCloseButton = overlay.querySelector('.overlay__close_type_image');
 
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity')
 
-const popupEditPrifile = popup.querySelector('.popup__container_type_profile');
-const popupAddPlace = popup.querySelector('.popup__container_type_place');
+const elementsContainer = document.querySelector('.elements');
 
-const formProfile = popup.querySelector('.popup__form_type_edit-profile');
-const inputUserName = formProfile.querySelector('.popup__input_type_user-name');
-const inputActivity = formProfile.querySelector('.popup__input_type_user-activity');
-const saveProfileButton = formProfile.querySelector('.popup__save-button_type_profile');
+const popupEditProfile = overlay.querySelector('.overlay__container_type_profile');
+const popupAddPlace = overlay.querySelector('.overlay__container_type_place');
 
-const formPlace = popup.querySelector('.popup__form_type_add-place');
-const inputPlaceName = formPlace.querySelector('.popup__input_type_place-name');
-const inputPlaceLink = formPlace.querySelector('.popup__input_type_place-link');
-const sevePlaceButton = formPlace.querySelector('.popup__save-button_type_place');
+const formProfile = overlay.querySelector('.overlay__form_type_edit-profile');
+const inputUserName = formProfile.querySelector('.overlay__input_type_user-name');
+const inputActivity = formProfile.querySelector('.overlay__input_type_user-activity');
 
-const imageContainer = popup.querySelector('.popup__image-contauner');
-const image = imageContainer.querySelector('.popup__image');
-const imageName = imageContainer.querySelector('.popup__image-name');
+const formPlace = overlay.querySelector('.overlay__form_type_add-place');
+const inputPlaceName = formPlace.querySelector('.overlay__input_type_place-name');
+const inputPlaceLink = formPlace.querySelector('.overlay__input_type_place-link');
 
+const imageContainer = overlay.querySelector('.overlay__image-contauner');
+const image = imageContainer.querySelector('.overlay__image');
+const imageName = imageContainer.querySelector('.overlay__image-name');
 
 
 function fillInput() {
@@ -35,16 +34,16 @@ function fillInput() {
 }
 
 function openForm(element) {
-  element.classList.add('popup__container_opened');
+  element.classList.add('overlay__popup_opened');
 }
 
 function openPopup() {
-  popup.classList.add('popup_opened');
+  overlay.classList.add('overlay_opened');
 }
 
-function openPopupEditPrifile() {
+function openPopupEditProfile() {
   openPopup();
-  openForm(popupEditPrifile);
+  openForm(popupEditProfile);
   fillInput();
 }
 
@@ -55,20 +54,19 @@ function openPopupAddPlase() {
 
 
 function closeForm(element) {
-  element.classList.remove('popup__container_opened');
+  element.classList.remove('overlay__popup_opened');
 }
 
 function closePopup() {
-  popup.classList.remove('popup_opened');
+  overlay.classList.remove('overlay_opened');
 }
 
 function clearPlaceInputs() {
-  inputPlaceName.value = '';
-  inputPlaceLink.value = '';
+  formPlace.reset();
 }
 
-function closePopupEditPrifile() {
-  closeForm(popupEditPrifile);
+function closePopupEditProfile() {
+  closeForm(popupEditProfile);
   closePopup();
 }
 
@@ -79,7 +77,7 @@ function closePopupAddPlace() {
 }
 
 function closeImage() {
-  imageContainer.classList.remove('popup__image-container_opened');
+  closeForm(imageContainer);
   closePopup();
 }
 
@@ -90,22 +88,22 @@ function profileFormSubmit(evt) {
   profileName.textContent = inputUserName.value;
   profileActivity.textContent = inputActivity.value;
 
-  closePopupEditPrifile();
+  closePopupEditProfile();
 }
 
 function placeFormSubmit(evt) {
   evt.preventDefault();
 
-  drawElement(inputPlaceName.value, inputPlaceLink.value);
+  elementsContainer.prepend(drawElement(inputPlaceName.value, inputPlaceLink.value));
   clearPlaceInputs();
   closePopupAddPlace();
 }
 
 
-editProfileButton.addEventListener('click', openPopupEditPrifile);
+editProfileButton.addEventListener('click', openPopupEditProfile);
 addPlaceButton.addEventListener('click', openPopupAddPlase);
 
-editProfileCloseButton.addEventListener('click', closePopupEditPrifile);
+editProfileCloseButton.addEventListener('click', closePopupEditProfile);
 addPlaceCloseButton.addEventListener('click', closePopupAddPlace);
 imageContainerCloseButton.addEventListener('click', closeImage);
 
@@ -114,13 +112,13 @@ formPlace.addEventListener('submit', placeFormSubmit);
 
 
 function drawElement(name, link) {
-  const elementsContainer = document.querySelector('.elements');
   const elementTemplate = document.querySelector('#element').content;
   const element = elementTemplate.cloneNode(true);
+
   const card = element.querySelector('.element');
   const like = card.querySelector('.element__like');
   const basket = card.querySelector('.element__basket');
-  const foto = card.querySelector('.element__foto');
+  const photo = card.querySelector('.element__photo');
 
   function changeLike() {
     like.classList.toggle('element__like_active');
@@ -131,23 +129,23 @@ function drawElement(name, link) {
   }
 
   function openImage() {
-    image.src = foto.src;
+    image.src = photo.src;
     image.alt = name;
     imageName.textContent = name;
     
     openPopup();
-    imageContainer.classList.add('popup__image-container_opened');
+    openForm(imageContainer);
   }
 
-  foto.addEventListener('click', openImage);
+  photo.addEventListener('click', openImage);
   like.addEventListener('click', changeLike);
   basket.addEventListener('click', deleteElement);
 
-  card.querySelector('.element__foto').src = link;
-  card.querySelector('.element__foto').alt = name;
+  photo.src = link;
+  photo.alt = name;
   card.querySelector('.element__name').textContent = name;
 
-  elementsContainer.prepend(element);
+  return element;
 }
 
 function drawInitialCards() {
@@ -179,7 +177,7 @@ function drawInitialCards() {
   ];
 
   initialCards.reverse().forEach(function(item) {
-    drawElement(item.name, item.link);
+    elementsContainer.prepend(drawElement(item.name, item.link));
   });
 }
 

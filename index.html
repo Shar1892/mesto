@@ -31,7 +31,7 @@
         <template id="element">
           <div class="element">
             <button class="element__basket" type="button"></button>
-            <img src="../mesto/images/Profile-foto.jpg" alt="Фото" class="element__foto">
+            <img src="../mesto/images/Profile-foto.jpg" alt="Фото" class="element__photo">
             <div class="element__container">
               <h2 class="element__name"></h2>
               <button class="element__like" type="button"></button>
@@ -45,31 +45,31 @@
       <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
     </footer>
 
-    <section class="popup">
-      <div class="popup__container popup__container_type_profile">
-        <button class="popup__close popup__close_type_profile" type="reset"></button>
-        <form class="popup__form popup__form_type_edit-profile" name="user-data">
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <input type="text" class="popup__input popup__input_type_user-name" name="user-name">
-          <input type="text" class="popup__input popup__input_type_user-activity" name="user-activity">
-          <input type="submit" class="popup__save-button popup__save-button_type_profile" value="Сохранить">
+    <section class="overlay">
+      <div class="overlay__container overlay__popup overlay__container_type_profile">
+        <button class="overlay__close overlay__close_type_profile" type="reset"></button>
+        <form class="overlay__form overlay__form_type_edit-profile" name="user-data">
+          <h2 class="overlay__title">Редактировать профиль</h2>
+          <input type="text" class="overlay__input overlay__input_type_user-name" name="user-name" required>
+          <input type="text" class="overlay__input overlay__input_type_user-activity" name="user-activity" required>
+          <input type="submit" class="overlay__save-button overlay__save-button_type_profile" value="Сохранить">
         </form>
       </div>
 
-      <div class="popup__container popup__container_type_place">
-        <button class="popup__close popup__close_type_place" type="reset"></button>
-        <form class="popup__form popup__form_type_add-place" name="place-data">
-          <h2 class="popup__title">Новое место</h2>
-          <input type="text" class="popup__input popup__input_type_place-name" placeholder="Название" name="place-name">
-          <input type="text" class="popup__input popup__input_type_place-link" placeholder="Ссылка на картинку" name="place-link">
-          <input type="submit" class="popup__save-button popup__save-button_type_place" value="Сохранить">
+      <div class="overlay__container overlay__popup overlay__container_type_place">
+        <button class="overlay__close overlay__close_type_place" type="reset"></button>
+        <form class="overlay__form overlay__form_type_add-place" name="place-data">
+          <h2 class="overlay__title">Новое место</h2>
+          <input type="text" class="overlay__input overlay__input_type_place-name" placeholder="Название" name="place-name" required>
+          <input type="url" class="overlay__input overlay__input_type_place-link" placeholder="Ссылка на картинку" name="place-link" required>
+          <input type="submit" class="overlay__save-button overlay__save-button_type_place" value="Сохранить">
         </form>
       </div>
 
-      <div class="popup__image-contauner">
-        <button class="popup__close popup__close_type_image" type="reset"></button>
-        <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg" alt="What?" class="popup__image">
-        <h2 class="popup__image-name">What?</h2>
+      <div class="overlay__image-contauner overlay__popup">
+        <button class="overlay__close overlay__close_type_image" type="reset"></button>
+        <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg" alt="What?" class="overlay__image">
+        <h2 class="overlay__image-name">What?</h2>
       </div>
 
     </section>
