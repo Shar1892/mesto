@@ -40,12 +40,12 @@ function showElement(element) {
 
 
 function openPopup(evt) {
+  showElement(overlay);
+
   if (evt.target === editProfileButton) {
-    showElement(overlay);
     showElement(popupEditProfile);
     fillInput();
   } else if (evt.target === addPlaceButton) {
-    showElement(overlay);
     showElement(popupAddPlace);
   }
 }
@@ -62,15 +62,14 @@ function clearPlaceInputs() {
 function closePopup(evt) {
   if (evt.target === editProfileCloseButton || evt.target === formProfile) {
     closeElement(popupEditProfile);
-    closeElement(overlay);
   } else if (evt.target === addPlaceCloseButton || evt.target === formPlace) {
     clearPlaceInputs();
     closeElement(popupAddPlace);
-    closeElement(overlay);
   } else if (evt.target === imageContainerCloseButton) {
     closeElement(imageContainer);
-    closeElement(overlay);
   }
+
+  closeElement(overlay);
 }
 
 
