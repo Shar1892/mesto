@@ -59,6 +59,12 @@ function clearPlaceInputs() {
   formPlace.reset();
 }
 
+function clearPhotoData() {
+  image.src = '';
+  image.alt = '';
+  imageName.textContent = '';
+}
+
 function closePopup(evt) {
   if (evt.target === editProfileCloseButton || evt.target === formProfile) {
     closeElement(popupEditProfile);
@@ -67,6 +73,7 @@ function closePopup(evt) {
     closeElement(popupAddPlace);
   } else if (evt.target === imageContainerCloseButton) {
     closeElement(imageContainer);
+    clearPhotoData();
   }
 
   closeElement(overlay);
@@ -74,7 +81,6 @@ function closePopup(evt) {
 
 
 function profileFormSubmit(evt) {
-  console.log(evt.target);
   evt.preventDefault();
 
   profileName.textContent = inputUserName.value;
