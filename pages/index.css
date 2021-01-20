@@ -43,5 +43,5 @@
 @import url(../blocks/overlay/__image-contauner/overlay__image-contauner.css);
 @import url(../blocks/overlay/__image/overlay__image.css);
 @import url(../blocks/overlay/__image-name/overlay__image-name.css);
-@import url(../blocks/overlay/__popup/overlay__popup.css);
-@import url(../blocks/overlay/__popup/_opened/overlay__popup_opened.css);
+
+@import url(../blocks/page/__popup/_opened/page__popup_opened.css);

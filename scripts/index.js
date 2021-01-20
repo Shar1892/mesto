@@ -33,62 +33,55 @@ function fillInput() {
   inputActivity.value = profileActivity.textContent;
 }
 
-function openForm(element) {
-  element.classList.add('overlay__popup_opened');
-}
 
-function openPopup() {
-  overlay.classList.add('overlay_opened');
-}
-
-function openPopupEditProfile() {
-  openPopup();
-  openForm(popupEditProfile);
-  fillInput();
-}
-
-function openPopupAddPlase() {
-  openPopup();
-  openForm(popupAddPlace);
+function showElement(element) {
+  element.classList.add('page__popup_opened');
 }
 
 
-function closeForm(element) {
-  element.classList.remove('overlay__popup_opened');
+function openPopup(evt) {
+  if (evt.target === editProfileButton) {
+    showElement(overlay);
+    showElement(popupEditProfile);
+    fillInput();
+  } else if (evt.target === addPlaceButton) {
+    showElement(overlay);
+    showElement(popupAddPlace);
+  }
 }
 
-function closePopup() {
-  overlay.classList.remove('overlay_opened');
+
+function closeElement(element) {
+  element.classList.remove('page__popup_opened');
 }
 
 function clearPlaceInputs() {
   formPlace.reset();
 }
 
-function closePopupEditProfile() {
-  closeForm(popupEditProfile);
-  closePopup();
-}
-
-function closePopupAddPlace() {
-  clearPlaceInputs()
-  closeForm(popupAddPlace);
-  closePopup();
-}
-
-function closeImage() {
-  closeForm(imageContainer);
-  closePopup();
+function closePopup(evt) {
+  if (evt.target === editProfileCloseButton || evt.target === formProfile) {
+    closeElement(popupEditProfile);
+    closeElement(overlay);
+  } else if (evt.target === addPlaceCloseButton || evt.target === formPlace) {
+    clearPlaceInputs();
+    closeElement(popupAddPlace);
+    closeElement(overlay);
+  } else if (evt.target === imageContainerCloseButton) {
+    closeElement(imageContainer);
+    closeElement(overlay);
+  }
 }
 
 
 function profileFormSubmit(evt) {
+  console.log(evt.target);
   evt.preventDefault();
 
   profileName.textContent = inputUserName.value;
   profileActivity.textContent = inputActivity.value;
 
-  closePopupEditProfile();
+  closePopup(evt);
 }
 
 function placeFormSubmit(evt) {
@@ -96,16 +89,16 @@ function placeFormSubmit(evt) {
 
   elementsContainer.prepend(drawElement(inputPlaceName.value, inputPlaceLink.value));
   clearPlaceInputs();
-  closePopupAddPlace();
+  closePopup(evt);
 }
 
 
-editProfileButton.addEventListener('click', openPopupEditProfile);
-addPlaceButton.addEventListener('click', openPopupAddPlase);
+editProfileButton.addEventListener('click', openPopup);
+addPlaceButton.addEventListener('click', openPopup);
 
-editProfileCloseButton.addEventListener('click', closePopupEditProfile);
-addPlaceCloseButton.addEventListener('click', closePopupAddPlace);
-imageContainerCloseButton.addEventListener('click', closeImage);
+editProfileCloseButton.addEventListener('click', closePopup);
+addPlaceCloseButton.addEventListener('click', closePopup);
+imageContainerCloseButton.addEventListener('click', closePopup);
 
 formProfile.addEventListener('submit', profileFormSubmit);
 formPlace.addEventListener('submit', placeFormSubmit);
@@ -133,8 +126,8 @@ function drawElement(name, link) {
     image.alt = name;
     imageName.textContent = name;
     
-    openPopup();
-    openForm(imageContainer);
+    showElement(overlay);
+    showElement(imageContainer);
   }
 
   photo.addEventListener('click', openImage);
