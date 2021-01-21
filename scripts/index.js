@@ -28,26 +28,24 @@ const image = imageContainer.querySelector('.overlay__image');
 const imageName = imageContainer.querySelector('.overlay__image-name');
 
 
-function fillInput() {
+function fillProfileInput() {
   inputUserName.value = profileName.textContent;
   inputActivity.value = profileActivity.textContent;
 }
-
 
 function showElement(element) {
   element.classList.add('page__popup_opened');
 }
 
-
-function openPopup(evt) {
+function openPopupEditProfile() {
   showElement(overlay);
+  showElement(popupEditProfile);
+  fillProfileInput();
+}
 
-  if (evt.target === editProfileButton) {
-    showElement(popupEditProfile);
-    fillInput();
-  } else if (evt.target === addPlaceButton) {
-    showElement(popupAddPlace);
-  }
+function openPopupAddPlase() {
+  showElement(overlay);
+  showElement(popupAddPlace);
 }
 
 
@@ -59,23 +57,19 @@ function clearPlaceInputs() {
   formPlace.reset();
 }
 
-function clearPhotoData() {
-  image.src = '';
-  image.alt = '';
-  imageName.textContent = '';
+function closePopupEditProfile() {
+  closeElement(popupEditProfile);
+  closeElement(overlay);
 }
 
-function closePopup(evt) {
-  if (evt.target === editProfileCloseButton || evt.target === formProfile) {
-    closeElement(popupEditProfile);
-  } else if (evt.target === addPlaceCloseButton || evt.target === formPlace) {
-    clearPlaceInputs();
-    closeElement(popupAddPlace);
-  } else if (evt.target === imageContainerCloseButton) {
-    closeElement(imageContainer);
-    clearPhotoData();
-  }
+function closePopupAddPlase() {
+  closeElement(popupAddPlace);
+  clearPlaceInputs();
+  closeElement(overlay);
+}
 
+function closePopupImage() {
+  closeElement(imageContainer);
   closeElement(overlay);
 }
 
@@ -86,24 +80,23 @@ function profileFormSubmit(evt) {
   profileName.textContent = inputUserName.value;
   profileActivity.textContent = inputActivity.value;
 
-  closePopup(evt);
+  closePopupEditProfile();
 }
 
 function placeFormSubmit(evt) {
   evt.preventDefault();
 
   elementsContainer.prepend(drawElement(inputPlaceName.value, inputPlaceLink.value));
-  clearPlaceInputs();
-  closePopup(evt);
+  closePopupAddPlase();
 }
 
 
-editProfileButton.addEventListener('click', openPopup);
-addPlaceButton.addEventListener('click', openPopup);
+editProfileButton.addEventListener('click', openPopupEditProfile);
+addPlaceButton.addEventListener('click', openPopupAddPlase);
 
-editProfileCloseButton.addEventListener('click', closePopup);
-addPlaceCloseButton.addEventListener('click', closePopup);
-imageContainerCloseButton.addEventListener('click', closePopup);
+editProfileCloseButton.addEventListener('click', closePopupEditProfile);
+addPlaceCloseButton.addEventListener('click', closePopupAddPlase);
+imageContainerCloseButton.addEventListener('click', closePopupImage);
 
 formProfile.addEventListener('submit', profileFormSubmit);
 formPlace.addEventListener('submit', placeFormSubmit);
@@ -126,11 +119,14 @@ function drawElement(name, link) {
     card.remove();
   }
 
-  function openImage() {
+  function fillPhotoData() {
     image.src = photo.src;
     image.alt = name;
     imageName.textContent = name;
-    
+  }
+
+  function openImage() {
+    fillPhotoData();    
     showElement(overlay);
     showElement(imageContainer);
   }
