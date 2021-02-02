@@ -74,20 +74,57 @@ function closePopupImage() {
 }
 
 
+function hasIvalidInput(inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+}
+
+
 function profileFormSubmit(evt) {
   evt.preventDefault();
+  
+  if (!hasIvalidInput([inputUserName, inputActivity])) {
+    profileName.textContent = inputUserName.value;
+    profileActivity.textContent = inputActivity.value;
 
-  profileName.textContent = inputUserName.value;
-  profileActivity.textContent = inputActivity.value;
+    closePopupEditProfile();
+  }
 
-  closePopupEditProfile();
 }
 
 function placeFormSubmit(evt) {
   evt.preventDefault();
 
-  elementsContainer.prepend(drawElement(inputPlaceName.value, inputPlaceLink.value));
-  closePopupAddPlase();
+  if (!hasIvalidInput([inputUserName, inputActivity])) {
+    elementsContainer.prepend(drawElement(inputPlaceName.value, inputPlaceLink.value));
+    closePopupAddPlase();
+  }
+}
+
+
+function closeOverlay() {
+  closeElement(popupEditProfile);
+
+  closeElement(popupAddPlace);
+  clearPlaceInputs();
+
+  closeElement(imageContainer);
+
+  closeElement(overlay);
+}
+
+function closeOverlayOnClick(evt) {
+  if (evt.target === evt.currentTarget) {
+    closeOverlay();
+  }
+}
+
+function closeOverlayOnEsc(evt) {
+  if (evt.key === 'Escape') {
+    closeOverlay();
+    console.log(evt.target);
+  }
 }
 
 
@@ -97,6 +134,9 @@ addPlaceButton.addEventListener('click', openPopupAddPlase);
 editProfileCloseButton.addEventListener('click', closePopupEditProfile);
 addPlaceCloseButton.addEventListener('click', closePopupAddPlase);
 imageContainerCloseButton.addEventListener('click', closePopupImage);
+
+overlay.addEventListener('click', closeOverlayOnClick);
+document.addEventListener('keydown', closeOverlayOnEsc);
 
 formProfile.addEventListener('submit', profileFormSubmit);
 formPlace.addEventListener('submit', placeFormSubmit);

@@ -1,0 +1,7 @@
+.overlay__input-container {
+  position: relative;
+}
+
+.overlay__input-container:first-of-type {
+  z-index: 1;
+}

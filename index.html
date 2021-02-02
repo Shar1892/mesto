@@ -48,21 +48,33 @@
     <section class="overlay">
       <div class="overlay__container overlay__container_type_profile">
         <button class="overlay__close overlay__close_type_profile" type="reset"></button>
-        <form class="overlay__form overlay__form_type_edit-profile" name="user-data">
+        <form class="overlay__form overlay__form_type_edit-profile" name="user-data" novalidate>
           <h2 class="overlay__title">Редактировать профиль</h2>
-          <input type="text" class="overlay__input overlay__input_type_user-name" name="user-name" required>
-          <input type="text" class="overlay__input overlay__input_type_user-activity" name="user-activity" required>
-          <input type="submit" class="overlay__save-button overlay__save-button_type_profile" value="Сохранить">
+          <div class="overlay__input-container">
+            <input type="text" id="user-name-input" class="overlay__input overlay__input_type_user-name" name="user-name" minlength="2" maxlength="40" required>
+            <span class="overlay__input-error overlay__user-name-input-error"></span>
+          </div>
+          <div class="overlay__input-container">
+            <input type="text" id="user-activity-input" class="overlay__input overlay__input_type_user-activity" name="user-activity" minlength="2" maxlength="200" required>
+            <span class="overlay__input-error overlay__user-activity-input-error"></span>
+          </div>
+          <button type="submit" class="overlay__save-button overlay__save-button_type_profile">Сохранить</button>
         </form>
       </div>
 
       <div class="overlay__container overlay__container_type_place">
         <button class="overlay__close overlay__close_type_place" type="reset"></button>
-        <form class="overlay__form overlay__form_type_add-place" name="place-data">
+        <form class="overlay__form overlay__form_type_add-place" name="place-data" novalidate>
           <h2 class="overlay__title">Новое место</h2>
-          <input type="text" class="overlay__input overlay__input_type_place-name" placeholder="Название" name="place-name" required>
-          <input type="url" class="overlay__input overlay__input_type_place-link" placeholder="Ссылка на картинку" name="place-link" required>
-          <input type="submit" class="overlay__save-button overlay__save-button_type_place" value="Сохранить">
+          <div class="overlay__input-container">
+            <input type="text" id="place-name-input" class="overlay__input overlay__input_type_place-name" placeholder="Название" name="place-name" minlength="2" maxlength="30" required>
+            <span class="overlay__input-error overlay__place-name-input-error"></span>
+          </div>
+          <div class="overlay__input-container">
+            <input type="url" id="place-link-input" class="overlay__input overlay__input_type_place-link" placeholder="Ссылка на картинку" name="place-link" required>
+            <span class="overlay__input-error overlay__place-link-input-error"></span>
+          </div>
+          <button type="submit" class="overlay__save-button overlay__save-button_type_place">Сохранить</button>
         </form>
       </div>
 
@@ -76,5 +88,6 @@
   </div>
 
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 </html>

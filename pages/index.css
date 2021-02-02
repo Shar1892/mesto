@@ -38,9 +38,14 @@
 @import url(../blocks/overlay/__form/overlay__form.css);
 @import url(../blocks/overlay/__title/overlay__title.css);
 @import url(../blocks/overlay/__input/overlay__input.css);
+@import url(../blocks/overlay/__input/_type/overlay__input_type_error.css);
 @import url(../blocks/overlay/__save-button/overlay__save-button.css);
+@import url(../blocks/overlay/__save-button/_disabled/overlay__save-button_disabled.css);
 @import url(../blocks/overlay/__image-contauner/overlay__image-contauner.css);
 @import url(../blocks/overlay/__image/overlay__image.css);
 @import url(../blocks/overlay/__image-name/overlay__image-name.css);
+@import url(../blocks/overlay/__input-error/overlay__input-error.css);
+@import url(../blocks/overlay/__input-error/_visible/overlay__input-error_visible.css);
+@import url(../blocks/overlay/__input-container/overlay__input-container.css);
 
 @import url(../blocks/page/__popup/_opened/page__popup_opened.css);
