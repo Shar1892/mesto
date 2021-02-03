@@ -96,7 +96,7 @@ function profileFormSubmit(evt) {
 function placeFormSubmit(evt) {
   evt.preventDefault();
 
-  if (!hasIvalidInput([inputUserName, inputActivity])) {
+  if (!hasIvalidInput([inputPlaceName, inputPlaceLink])) {
     elementsContainer.prepend(drawElement(inputPlaceName.value, inputPlaceLink.value));
     closePopupAddPlase();
   }
