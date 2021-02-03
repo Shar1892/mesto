@@ -45,8 +45,8 @@
       <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
     </footer>
 
-    <section class="overlay">
-      <div class="overlay__container overlay__container_type_profile">
+    <section class="overlay overlay_type_profile">
+      <div class="overlay__container">
         <button class="overlay__close overlay__close_type_profile" type="reset"></button>
         <form class="overlay__form overlay__form_type_edit-profile" name="user-data" novalidate>
           <h2 class="overlay__title">Редактировать профиль</h2>
@@ -61,8 +61,10 @@
           <button type="submit" class="overlay__save-button overlay__save-button_type_profile">Сохранить</button>
         </form>
       </div>
+    </section>
 
-      <div class="overlay__container overlay__container_type_place">
+    <section class="overlay overlay_type_place">
+      <div class="overlay__container">
         <button class="overlay__close overlay__close_type_place" type="reset"></button>
         <form class="overlay__form overlay__form_type_add-place" name="place-data" novalidate>
           <h2 class="overlay__title">Новое место</h2>
@@ -77,13 +79,14 @@
           <button type="submit" class="overlay__save-button overlay__save-button_type_place">Сохранить</button>
         </form>
       </div>
+    </section>
 
+    <section class="overlay overlay_type_image">
       <div class="overlay__image-contauner">
         <button class="overlay__close overlay__close_type_image" type="reset"></button>
         <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg" alt="What?" class="overlay__image">
         <h2 class="overlay__image-name">What?</h2>
       </div>
-
     </section>
   </div>
 

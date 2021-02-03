@@ -1,31 +1,37 @@
-const overlay = document.querySelector('.overlay');
+//const overlay = document.querySelector('.overlay');
 
 const editProfileButton = document.querySelector('.profile__edit-button');
 const addPlaceButton = document.querySelector('.profile__add-button');
 
-const editProfileCloseButton = overlay.querySelector('.overlay__close_type_profile');
-const addPlaceCloseButton = overlay.querySelector('.overlay__close_type_place');
-const imageContainerCloseButton = overlay.querySelector('.overlay__close_type_image');
+//const editProfileCloseButton = overlay.querySelector('.overlay__close_type_profile');
+//const addPlaceCloseButton = overlay.querySelector('.overlay__close_type_place');
+//const imageContainerCloseButton = overlay.querySelector('.overlay__close_type_image');
 
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity')
 
 const elementsContainer = document.querySelector('.elements');
 
-const popupEditProfile = overlay.querySelector('.overlay__container_type_profile');
-const popupAddPlace = overlay.querySelector('.overlay__container_type_place');
+//const popupEditProfile = overlay.querySelector('.overlay__container_type_profile');
+//const popupAddPlace = overlay.querySelector('.overlay__container_type_place');
 
-const formProfile = overlay.querySelector('.overlay__form_type_edit-profile');
+const overlayProfile = document.querySelector('.overlay_type_profile');
+const formProfile = overlayProfile.querySelector('.overlay__form_type_edit-profile');
 const inputUserName = formProfile.querySelector('.overlay__input_type_user-name');
 const inputActivity = formProfile.querySelector('.overlay__input_type_user-activity');
+const editProfileCloseButton = overlayProfile.querySelector('.overlay__close_type_profile');
 
-const formPlace = overlay.querySelector('.overlay__form_type_add-place');
+const overlayPlace = document.querySelector('.overlay_type_place');
+const formPlace = overlayPlace.querySelector('.overlay__form_type_add-place');
 const inputPlaceName = formPlace.querySelector('.overlay__input_type_place-name');
 const inputPlaceLink = formPlace.querySelector('.overlay__input_type_place-link');
+const addPlaceCloseButton = overlayPlace.querySelector('.overlay__close_type_place');
 
-const imageContainer = overlay.querySelector('.overlay__image-contauner');
+const overlayImage = document.querySelector('.overlay_type_image');
+const imageContainer = overlayImage.querySelector('.overlay__image-contauner');
 const image = imageContainer.querySelector('.overlay__image');
 const imageName = imageContainer.querySelector('.overlay__image-name');
+const imageContainerCloseButton = overlayImage.querySelector('.overlay__close_type_image');
 
 
 function fillProfileInput() {
@@ -38,14 +44,16 @@ function showElement(element) {
 }
 
 function openPopupEditProfile() {
-  showElement(overlay);
-  showElement(popupEditProfile);
+  showElement(overlayProfile);
+  //showElement(overlay);
+  //showElement(popupEditProfile);
   fillProfileInput();
 }
 
 function openPopupAddPlase() {
-  showElement(overlay);
-  showElement(popupAddPlace);
+  showElement(overlayPlace);
+  //showElement(overlay);
+  //showElement(popupAddPlace);
 }
 
 
@@ -57,20 +65,30 @@ function clearPlaceInputs() {
   formPlace.reset();
 }
 
+function clearImageData() {
+  image.src = '';
+  image.alt = '';
+  imageName.textContent = '';
+}
+
 function closePopupEditProfile() {
-  closeElement(popupEditProfile);
-  closeElement(overlay);
+  closeElement(overlayProfile);
+  //closeElement(popupEditProfile);
+  //closeElement(overlay);
 }
 
 function closePopupAddPlase() {
-  closeElement(popupAddPlace);
+  closeElement(overlayPlace);
+  //closeElement(popupAddPlace);
   clearPlaceInputs();
-  closeElement(overlay);
+  //closeElement(overlay);
 }
 
 function closePopupImage() {
+  closeElement(overlayImage);
+  //clearImageData();
   closeElement(imageContainer);
-  closeElement(overlay);
+  //closeElement(overlay);
 }
 
 
@@ -135,8 +153,8 @@ editProfileCloseButton.addEventListener('click', closePopupEditProfile);
 addPlaceCloseButton.addEventListener('click', closePopupAddPlase);
 imageContainerCloseButton.addEventListener('click', closePopupImage);
 
-overlay.addEventListener('click', closeOverlayOnClick);
-document.addEventListener('keydown', closeOverlayOnEsc);
+//overlay.addEventListener('click', closeOverlayOnClick);
+//document.addEventListener('keydown', closeOverlayOnEsc);
 
 formProfile.addEventListener('submit', profileFormSubmit);
 formPlace.addEventListener('submit', placeFormSubmit);
@@ -166,8 +184,9 @@ function drawElement(name, link) {
   }
 
   function openImage() {
-    fillPhotoData();    
-    showElement(overlay);
+    fillPhotoData();
+    showElement(overlayImage);
+    //showElement(overlay);
     showElement(imageContainer);
   }
 
