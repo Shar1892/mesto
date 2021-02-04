@@ -32,14 +32,14 @@ const selectors = {
 }
 
 
-function checkForm(settingsObject, formElement) {
+function clearValidationErrors(settingsObject, formElement) {
   const inputList = Array.from(formElement.querySelectorAll(settingsObject.inputSelector));
   const buttonElement = formElement.querySelector(settingsObject.submitButtonSelector);
 
   inputList.forEach((inputElement) => {
-    checkInputValidity(settingsObject, formElement, inputElement);
-    toggleButtonState(settingsObject, inputList, buttonElement);
-  });
+    hideInputError(settingsObject, formElement, inputElement);
+  })
+  toggleButtonState(settingsObject, inputList, buttonElement);
 }
 
 function fillProfileInput() {
@@ -49,23 +49,19 @@ function fillProfileInput() {
 
 function showElement(element) {
   element.classList.add('page__popup_opened');
-}
-
-function addListenerToDocument() {
   document.addEventListener('keydown', closePopupByEsc);
 }
 
 function openPopupEditProfile() {
   showElement(overlayProfile);
   fillProfileInput();
-  addListenerToDocument();
-  checkForm(selectors, formProfile);
+  clearValidationErrors(selectors, formProfile);
 }
 
-function openPopupAddPlase() {
+function openPopupAddPlace() {
   showElement(overlayPlace);
-  addListenerToDocument();
-  checkForm(selectors, formPlace);
+  clearPlaceInputs();
+  clearValidationErrors(selectors, formPlace);
 }
 
 function clearPlaceInputs() {
@@ -75,10 +71,6 @@ function clearPlaceInputs() {
 function closePopup(overlay) {
   overlay.classList.remove('page__popup_opened');
   document.removeEventListener('keydown', closePopupByEsc);
-
-  if (overlay.classList.contains('overlay_type_place')) {
-    clearPlaceInputs();
-  }
 }
 
 overlays.forEach((overlay) => {
@@ -124,7 +116,7 @@ function closePopupByEsc(evt) {
 
 
 editProfileButton.addEventListener('click', openPopupEditProfile);
-addPlaceButton.addEventListener('click', openPopupAddPlase);
+addPlaceButton.addEventListener('click', openPopupAddPlace);
 
 formProfile.addEventListener('submit', profileFormSubmit);
 formPlace.addEventListener('submit', placeFormSubmit);
@@ -156,7 +148,6 @@ function drawElement(name, link) {
   function openImage() {
     fillPhotoData();
     showElement(overlayImage);
-    addListenerToDocument();
   }
 
   photo.addEventListener('click', openImage);

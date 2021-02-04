@@ -41,9 +41,6 @@ function setEventListeners(settingsObject, formElement) {
 
   if (formElement.name === 'place-data') {
     toggleButtonState(settingsObject, inputList, buttonElement);
-    inputList.forEach((inputElement) => {
-      checkInputValidity(settingsObject, formElement, inputElement);
-    });
   }
 
   inputList.forEach((inputElement) => {
