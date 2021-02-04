@@ -1,38 +1,46 @@
-//const overlay = document.querySelector('.overlay');
+const overlays = Array.from(document.querySelectorAll('.overlay'));
 
 const editProfileButton = document.querySelector('.profile__edit-button');
 const addPlaceButton = document.querySelector('.profile__add-button');
-
-//const editProfileCloseButton = overlay.querySelector('.overlay__close_type_profile');
-//const addPlaceCloseButton = overlay.querySelector('.overlay__close_type_place');
-//const imageContainerCloseButton = overlay.querySelector('.overlay__close_type_image');
 
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity')
 
 const elementsContainer = document.querySelector('.elements');
 
-//const popupEditProfile = overlay.querySelector('.overlay__container_type_profile');
-//const popupAddPlace = overlay.querySelector('.overlay__container_type_place');
-
 const overlayProfile = document.querySelector('.overlay_type_profile');
 const formProfile = overlayProfile.querySelector('.overlay__form_type_edit-profile');
 const inputUserName = formProfile.querySelector('.overlay__input_type_user-name');
 const inputActivity = formProfile.querySelector('.overlay__input_type_user-activity');
-const editProfileCloseButton = overlayProfile.querySelector('.overlay__close_type_profile');
 
 const overlayPlace = document.querySelector('.overlay_type_place');
 const formPlace = overlayPlace.querySelector('.overlay__form_type_add-place');
 const inputPlaceName = formPlace.querySelector('.overlay__input_type_place-name');
 const inputPlaceLink = formPlace.querySelector('.overlay__input_type_place-link');
-const addPlaceCloseButton = overlayPlace.querySelector('.overlay__close_type_place');
 
 const overlayImage = document.querySelector('.overlay_type_image');
 const imageContainer = overlayImage.querySelector('.overlay__image-contauner');
 const image = imageContainer.querySelector('.overlay__image');
 const imageName = imageContainer.querySelector('.overlay__image-name');
-const imageContainerCloseButton = overlayImage.querySelector('.overlay__close_type_image');
 
+const selectors = {
+  inputSelector: '.overlay__input',
+  submitButtonSelector: '.overlay__save-button',
+  inactiveButtonClass: 'overlay__save-button_disabled',
+  inputErrorClass: 'overlay__input_type_error',
+  errorClass: 'overlay__input-error_visible'
+}
+
+
+function checkForm(settingsObject, formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(settingsObject.inputSelector));
+  const buttonElement = formElement.querySelector(settingsObject.submitButtonSelector);
+
+  inputList.forEach((inputElement) => {
+    checkInputValidity(settingsObject, formElement, inputElement);
+    toggleButtonState(settingsObject, inputList, buttonElement);
+  });
+}
 
 function fillProfileInput() {
   inputUserName.value = profileName.textContent;
@@ -43,61 +51,46 @@ function showElement(element) {
   element.classList.add('page__popup_opened');
 }
 
+function addListenerToDocument() {
+  document.addEventListener('keydown', closePopupByEsc);
+}
+
 function openPopupEditProfile() {
   showElement(overlayProfile);
-  //showElement(overlay);
-  //showElement(popupEditProfile);
   fillProfileInput();
+  addListenerToDocument();
+  checkForm(selectors, formProfile);
 }
 
 function openPopupAddPlase() {
   showElement(overlayPlace);
-  //showElement(overlay);
-  //showElement(popupAddPlace);
-}
-
-
-function closeElement(element) {
-  element.classList.remove('page__popup_opened');
+  addListenerToDocument();
+  checkForm(selectors, formPlace);
 }
 
 function clearPlaceInputs() {
   formPlace.reset();
 }
 
-function clearImageData() {
-  image.src = '';
-  image.alt = '';
-  imageName.textContent = '';
+function closePopup(overlay) {
+  overlay.classList.remove('page__popup_opened');
+  document.removeEventListener('keydown', closePopupByEsc);
+
+  if (overlay.classList.contains('overlay_type_place')) {
+    clearPlaceInputs();
+  }
 }
 
-function closePopupEditProfile() {
-  closeElement(overlayProfile);
-  //closeElement(popupEditProfile);
-  //closeElement(overlay);
-}
-
-function closePopupAddPlase() {
-  closeElement(overlayPlace);
-  //closeElement(popupAddPlace);
-  clearPlaceInputs();
-  //closeElement(overlay);
-}
-
-function closePopupImage() {
-  closeElement(overlayImage);
-  //clearImageData();
-  closeElement(imageContainer);
-  //closeElement(overlay);
-}
-
-
-function hasIvalidInput(inputList) {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
+overlays.forEach((overlay) => {
+  overlay.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('page__popup_opened')) {
+      closePopup(overlay);
+    }
+    if (evt.target.classList.contains('overlay__close')) {
+      closePopup(overlay);
+    }
   });
-}
-
+})
 
 function profileFormSubmit(evt) {
   evt.preventDefault();
@@ -106,7 +99,7 @@ function profileFormSubmit(evt) {
     profileName.textContent = inputUserName.value;
     profileActivity.textContent = inputActivity.value;
 
-    closePopupEditProfile();
+    closePopup(overlayProfile);
   }
 
 }
@@ -116,45 +109,22 @@ function placeFormSubmit(evt) {
 
   if (!hasIvalidInput([inputPlaceName, inputPlaceLink])) {
     elementsContainer.prepend(drawElement(inputPlaceName.value, inputPlaceLink.value));
-    closePopupAddPlase();
+    
+    closePopup(overlayPlace);
   }
 }
 
 
-function closeOverlay() {
-  closeElement(popupEditProfile);
-
-  closeElement(popupAddPlace);
-  clearPlaceInputs();
-
-  closeElement(imageContainer);
-
-  closeElement(overlay);
-}
-
-function closeOverlayOnClick(evt) {
-  if (evt.target === evt.currentTarget) {
-    closeOverlay();
-  }
-}
-
-function closeOverlayOnEsc(evt) {
+function closePopupByEsc(evt) {
   if (evt.key === 'Escape') {
-    closeOverlay();
-    console.log(evt.target);
+    const openPopup= document.querySelector('.page__popup_opened')
+    closePopup(openPopup);
   }
 }
 
 
 editProfileButton.addEventListener('click', openPopupEditProfile);
 addPlaceButton.addEventListener('click', openPopupAddPlase);
-
-editProfileCloseButton.addEventListener('click', closePopupEditProfile);
-addPlaceCloseButton.addEventListener('click', closePopupAddPlase);
-imageContainerCloseButton.addEventListener('click', closePopupImage);
-
-//overlay.addEventListener('click', closeOverlayOnClick);
-//document.addEventListener('keydown', closeOverlayOnEsc);
 
 formProfile.addEventListener('submit', profileFormSubmit);
 formPlace.addEventListener('submit', placeFormSubmit);
@@ -186,8 +156,7 @@ function drawElement(name, link) {
   function openImage() {
     fillPhotoData();
     showElement(overlayImage);
-    //showElement(overlay);
-    showElement(imageContainer);
+    addListenerToDocument();
   }
 
   photo.addEventListener('click', openImage);
