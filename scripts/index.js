@@ -1,6 +1,15 @@
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
 
+const elementSelectors = {
+  formSelector: '.overlay__form',
+  inputSelector: '.overlay__input',
+  submitButtonSelector: '.overlay__save-button',
+  inactiveButtonClass: 'overlay__save-button_disabled',
+  inputErrorClass: 'overlay__input_type_error',
+  errorClass: 'overlay__input-error_visible'
+}
+
 const overlays = Array.from(document.querySelectorAll('.overlay'));
 
 const editProfileButton = document.querySelector('.profile__edit-button');
@@ -21,49 +30,48 @@ const formPlace = overlayPlace.querySelector('.overlay__form_type_add-place');
 const inputPlaceName = formPlace.querySelector('.overlay__input_type_place-name');
 const inputPlaceLink = formPlace.querySelector('.overlay__input_type_place-link');
 
-export const overlayImage = document.querySelector('.overlay_type_image');
+const overlayImage = document.querySelector('.overlay_type_image');
 const imageContainer = overlayImage.querySelector('.overlay__image-contauner');
 const image = imageContainer.querySelector('.overlay__image');
 const imageName = imageContainer.querySelector('.overlay__image-name');
 
-const elementSelectors = {
-  formSelector: '.overlay__form',
-  inputSelector: '.overlay__input',
-  submitButtonSelector: '.overlay__save-button',
-  inactiveButtonClass: 'overlay__save-button_disabled',
-  inputErrorClass: 'overlay__input_type_error',
-  errorClass: 'overlay__input-error_visible'
-}
 
 
+const profileFormValidator = new FormValidator(elementSelectors, formProfile);
+profileFormValidator.enableValidation();
 
-function enableValidationForm(settingsObject, formElement) {
-  const form = new FormValidator(settingsObject, formElement);
+const placeFormValidator = new FormValidator(elementSelectors, formPlace);
+placeFormValidator.enableValidation();
 
-  form.enableValidation();
-}
 
 function fillProfileInput() {
   inputUserName.value = profileName.textContent;
   inputActivity.value = profileActivity.textContent;
 }
 
-export function showElement(element) {
+function showElement(element) {
   element.classList.add('page__popup_opened');
   document.addEventListener('keydown', closePopupByEsc);
 }
+
+
+function openImage(link, name) {
+  showElement(overlayImage);
+  fillPhotoData(link, name);
+}
+
 
 function openPopupEditProfile() {
   showElement(overlayProfile);
   fillProfileInput();
 
-  enableValidationForm(elementSelectors, formProfile);
+  profileFormValidator.clearValidationErrors();
 }
 
 function openPopupAddPlace() {
   showElement(overlayPlace);
   clearPlaceInputs();
-  enableValidationForm(elementSelectors, formPlace);
+  placeFormValidator.clearValidationErrors();
 }
 
 function clearPlaceInputs() {
@@ -86,32 +94,22 @@ overlays.forEach((overlay) => {
   });
 })
 
-function hasIvalidInput(inputList) {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  });
-}
-
 function profileFormSubmit(evt) {
   evt.preventDefault();
-  
-  if (!hasIvalidInput([inputUserName, inputActivity])) {
-    profileName.textContent = inputUserName.value;
-    profileActivity.textContent = inputActivity.value;
 
-    closePopup(overlayProfile);
-  }
+  profileName.textContent = inputUserName.value;
+  profileActivity.textContent = inputActivity.value;
+
+  closePopup(overlayProfile);
 
 }
 
 function placeFormSubmit(evt) {
   evt.preventDefault();
 
-  if (!hasIvalidInput([inputPlaceName, inputPlaceLink])) {
-    elementsContainer.prepend(drawCard(inputPlaceName.value, inputPlaceLink.value));
+  elementsContainer.prepend(drawCard(inputPlaceName.value, inputPlaceLink.value));
     
-    closePopup(overlayPlace);
-  }
+  closePopup(overlayPlace);
 }
 
 
@@ -122,7 +120,7 @@ function closePopupByEsc(evt) {
   }
 }
 
-export function fillPhotoData(link, name) {
+function fillPhotoData(link, name) {
   image.src = link;
   image.alt = name;
   imageName.textContent = name;
@@ -136,8 +134,8 @@ formProfile.addEventListener('submit', profileFormSubmit);
 formPlace.addEventListener('submit', placeFormSubmit);
 
 
-function drawCard(link, name) {
-  const card = new Card(link, name, '#element');
+function drawCard(link, name,) {
+  const card = new Card(link, name, '#element', openImage);
   const cardElement = card.createCard();
 
   return cardElement;

@@ -1,12 +1,11 @@
-import {fillPhotoData, showElement, overlayImage} from './index.js';
-
 export class Card {
-  constructor(name, image, selector) {
+  constructor(name, image, selector, openImageFunction) {
     this.image = image;
     this.name = name;
     this.selector = selector;
+    this._openImage = openImageFunction;
   }
-  
+
 
   _getTemplate() {
     const cardElement = document.querySelector(this.selector).content.cloneNode(true);
@@ -21,14 +20,9 @@ export class Card {
     this.card.remove();
   }
 
-  _openImage() {
-    fillPhotoData(this.image, this.name);
-    showElement(overlayImage);
-  }
-
   _setEventListeners() {
     this.photo.addEventListener('click', () => {
-      this._openImage();
+      this._openImage(this.image, this.name);
     });
     this.like.addEventListener('click', () => {
       this._changeLike();
