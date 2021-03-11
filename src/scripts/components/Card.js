@@ -1,9 +1,10 @@
 export class Card {
-  constructor(name, image, selector, openImageFunction) {
-    this.image = image;
-    this.name = name;
+
+  constructor(data, selector, handleCardClick) {
+    this.image = data.link;
+    this.name = data.name;
     this.selector = selector;
-    this._openImage = openImageFunction;
+    this._openImage = handleCardClick;
   }
 
 
@@ -22,7 +23,10 @@ export class Card {
 
   _setEventListeners() {
     this.photo.addEventListener('click', () => {
-      this._openImage(this.image, this.name);
+      this._openImage({
+        link: this.image,
+        name: this.name
+      });
     });
     this.like.addEventListener('click', () => {
       this._changeLike();
