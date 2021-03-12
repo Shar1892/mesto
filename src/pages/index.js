@@ -1,4 +1,4 @@
-import '../../pages/index.css';
+import './index.css';
 
 import {Card} from '../components/Card.js';
 import {FormValidator} from '../components/FormValidator.js';
@@ -28,31 +28,21 @@ placeFormValidator.enableValidation();
 const popupImage = new PopupWithImage('.overlay_type_image');
 popupImage.setEventListeners();
 
-const popupProfile = new PopupWithForm('.overlay_type_profile', (evt, data) => {
-  evt.preventDefault();
+const popupProfile = new PopupWithForm('.overlay_type_profile', (data) => {
   userInfo.setUserInfo(data);
   popupProfile.close();
 });
 popupProfile.setEventListeners();
 
-const popupPlace = new PopupWithForm('.overlay_type_place', (evt,data) => {
-  evt.preventDefault();
+function generateCard(data) {
+  const card = new Card (data, '#element', popupImage.open.bind(popupImage));
+  const cardElement = card.createCard();
+  return cardElement;
+}
 
-  const cardList = new Section({
-    items: [
-      {
-        name: data.name,
-        link: data.activity
-      }
-    ],
-    renderer: (item) => {
-      const card = new Card (item, '#element', popupImage.open.bind(popupImage));
-      const cardElement = card.createCard();
+const popupPlace = new PopupWithForm('.overlay_type_place', (data) => {
     
-      cardList.addItem(cardElement);
-    }
-  }, '.elements');
-  cardList.renderItems();
+  cardList.addItem(generateCard(data));
 
   popupPlace.close();
 });
@@ -68,24 +58,20 @@ const userInfo = new UserInfo({
 editProfileButton.addEventListener('click', () => {
   popupProfile.open(userInfo.getUserInfo());
   profileFormValidator.clearValidationErrors();
+  profileFormValidator.disabledSubmitButton();
 });
 
 addPlaceButton.addEventListener('click', () => {
-  popupPlace.open({
-    name: '',
-    activity: ''
-  });
+  popupPlace.open({});
   placeFormValidator.clearValidationErrors();
+  placeFormValidator.disabledSubmitButton();
 });
 
 
 const cardList = new Section({
   items: initialCardsList,
   renderer: (item) => {
-    const card = new Card (item, '#element', popupImage.open.bind(popupImage));
-    const cardElement = card.createCard();
-
-    cardList.addItem(cardElement);
+    cardList.addItem(generateCard(item));
   }
 }, '.elements');
 
