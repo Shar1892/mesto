@@ -18,7 +18,6 @@ import {
   formPlace,
   formAvatar,
   avatarHover,
-  initialCardsList
 } from '../utils/constants.js';
 
 

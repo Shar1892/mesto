@@ -22,7 +22,6 @@ export class PopupWithConfirm extends Popup {
 
   open(data) {
     super.open();
-    console.log(data);
     this._idCard = data.id;
     this._card = data.element;
   }
