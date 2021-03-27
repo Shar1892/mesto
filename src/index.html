@@ -13,13 +13,19 @@
 
     <main class="content">
       <section class="profile page__profile-margin">
-        <img src="./images/Profile-foto.jpg" alt="Фото пользователя" class="profile__avatar">
+        <!--<img src="./images/Profile-foto.jpg" alt="Фото пользователя" class="profile__avatar">-->
+        <div class="profile__avatar-container">
+          <img src="./images/Profile-foto.jpg" alt="Фото пользователя" class="profile__avatar">
+          <div class="profile__pencil-container">
+            <div class="profile__pencil"></div>
+          </div>
+        </div>
         <div class="profile__info">
           <div class="profile__container">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button class="profile__edit-button" type="button"></button>
           </div>
-          <p class="profile__activity">Исследователь океана</p>
+          <p class="profile__activity"></p>
         </div>
         <button class="profile__add-button" type="button">
         </button>
@@ -33,7 +39,10 @@
             <img src="./images/Profile-foto.jpg" alt="Фото" class="element__photo">
             <div class="element__container">
               <h2 class="element__name"></h2>
-              <button class="element__like" type="button"></button>
+              <div class="element__like-container">
+                <button class="element__like" type="button"></button>
+                <p class="element__like-counter"></p>
+              </div>
             </div>
           </div>
         </template>
@@ -54,7 +63,7 @@
             <span class="overlay__input-error overlay__user-name-input-error"></span>
           </div>
           <div class="overlay__input-container">
-            <input type="text" id="user-activity-input" class="overlay__input overlay__input_type_user-activity" name="activity" minlength="2" maxlength="200" required>
+            <input type="text" id="user-activity-input" class="overlay__input overlay__input_type_user-activity" name="about" minlength="2" maxlength="200" required>
             <span class="overlay__input-error overlay__user-activity-input-error"></span>
           </div>
           <button type="submit" class="overlay__save-button overlay__save-button_type_profile">Сохранить</button>
@@ -85,6 +94,30 @@
         <button class="overlay__close" type="reset"></button>
         <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg" alt="What?" class="overlay__image">
         <h2 class="overlay__image-name">What?</h2>
+      </div>
+    </section>
+
+    <section class="overlay overlay_type_image-remove">
+      <div class="overlay__container">
+        <button class="overlay__close" type="reset"></button>
+        <form class="overlay__form overlay__form_type_image-remove" name="image-remove" novalidate>
+          <h2 class="overlay__title">Вы уверены?</h2>
+          <button type="submit" class="overlay__confirm-button overlay__save-button_type_image-remove">Да</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="overlay overlay_type_avatar">
+      <div class="overlay__container">
+        <button class="overlay__close" type="reset"></button>
+        <form class="overlay__form overlay__form_type_avatar" name="avatar" novalidate>
+          <h2 class="overlay__title">Обновить аватар</h2>
+          <div class="overlay__input-container">
+            <input type="url" id="avatar-input" class="overlay__input overlay__input_type_avatar" name="avatar" required>
+            <span class="overlay__input-error overlay__avatar-input-error"></span>
+          </div>
+          <button type="submit" class="overlay__save-button overlay__save-button_type_avatar">Сохранить</button>
+        </form>
       </div>
     </section>
   </div>

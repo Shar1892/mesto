@@ -6,6 +6,7 @@ export class PopupWithForm extends Popup {
     this._form = this._element.querySelector('.overlay__form');
     this._inputList = this._form.querySelectorAll('.overlay__input');
     this._formSubmit = submitCallback;
+    this._submitButton = this._form.querySelector('.overlay__save-button');
   }
 
   _getInputValue() {
@@ -22,6 +23,10 @@ export class PopupWithForm extends Popup {
     });
   }
 
+  changeButtonText(text) {
+    this._submitButton.textContent = text;
+  }
+
   close() {
     super.close();
     this._form.reset();
@@ -34,5 +39,6 @@ export class PopupWithForm extends Popup {
   open(data) {
     super.open();
     this._setInputValue(data);
+    this.changeButtonText('Сохранить');
   }
 }

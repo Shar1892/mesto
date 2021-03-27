@@ -3,7 +3,7 @@
   background-color: #ffffff;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   box-sizing: border-box;
-  padding: 25px 15px 25px 21px;
+  padding: 22px 15px 22px 21px;
 }

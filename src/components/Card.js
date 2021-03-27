@@ -1,10 +1,18 @@
 export class Card {
 
-  constructor(data, selector, handleCardClick) {
+  constructor(data, selector, handleCardClick, confirmPopup, api) {
+
     this.image = data.link;
     this.name = data.name;
+    this.id = data._id;
+    this._ownerId = data.owner._id;
+    this._likesCounter = data.likes ? data.likes.length : 0;
+    this._likers = data.likes;
     this.selector = selector;
     this._openImage = handleCardClick;
+    this._confirmPopup = confirmPopup;
+    this._api = api;
+
   }
 
 
@@ -13,12 +21,12 @@ export class Card {
     return cardElement;
   }
 
-  _changeLike() {
-    this.like.classList.toggle('element__like_active');
-  }
-
-  _deleteElement() {
-    this.card.remove();
+    _deleteElement() {
+    this._confirmPopup.open({
+      id: this.id,
+      element: this.card
+    });
+    
   }
 
   _setEventListeners() {
@@ -36,19 +44,77 @@ export class Card {
     });
   }
 
+
+  _changeLike() {
+    if(!this.like.classList.contains('element__like_active')){
+      this._api.putLike(this.id)
+        .then((res) => {
+          this.counter.textContent = res.likes.length;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      this.like.classList.add('element__like_active');
+    } else {
+      this._api.removeLike(this.id)
+        .then((res) => {
+          this.counter.textContent = res.likes.length;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      this.like.classList.remove('element__like_active');
+    }
+  }
+
+
+  _checkIsLiked() {
+    for (let i = 0; i < this._likers.length; i++) {
+      if (this._likers[i]._id === '30559038ce74f4ed4698cbf8') {
+        return true;
+      }
+    } 
+  }
+
+  _showLike() {
+    if(this._likers && this._checkIsLiked()) {
+      this.like.classList.add('element__like_active');
+    }
+  }
+
+  _hideBasket() {
+    if (this._ownerId !== '30559038ce74f4ed4698cbf8') {
+      this.basket.classList.add('element__basket_type_hidden');
+    }
+  }
+
   createCard() {
     this.element = this._getTemplate();
     this.card = this.element.querySelector('.element');
     this.like = this.element.querySelector('.element__like');
     this.basket = this.element.querySelector('.element__basket');
     this.photo = this.element.querySelector('.element__photo');
+    this.counter = this.element.querySelector('.element__like-counter');
+
+    this._showLike();
+
+    this._hideBasket();
 
     this.photo.src = this.image;
     this.photo.alt = this.name;
+    this.counter.textContent = this._likesCounter;
     this.card.querySelector('.element__name').textContent = this.name;
 
     this._setEventListeners();
 
     return this.element;
   }
+
+  showCard(selector) {
+    const container = document.querySelector(selector);
+    container.prepend(this.createCard());
+  }
+
 }

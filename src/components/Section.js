@@ -1,5 +1,5 @@
 export class Section {
-  constructor({items, renderer}, selector) {
+  constructor(items, renderer, selector) {
     this._initalArray = items;
     this._renderer = renderer;
 
@@ -7,7 +7,7 @@ export class Section {
   }
 
   addItem(element) {
-    this._container.prepend(element);
+    this._container.append(element);
   }
 
   renderItems() {

@@ -8,11 +8,14 @@ export const elementSelectors = {
 }
 
 
+export const avatarHover = document.querySelector('.profile__pencil-container');
+
 export const editProfileButton = document.querySelector('.profile__edit-button');
 export const addPlaceButton = document.querySelector('.profile__add-button');
 
 export const profileName = document.querySelector('.profile__name');
 export const profileActivity = document.querySelector('.profile__activity')
+export const profileAvatar = document.querySelector('.profile__avatar');
 
 
 const overlayProfile = document.querySelector('.overlay_type_profile');
@@ -20,6 +23,9 @@ export const formProfile = overlayProfile.querySelector('.overlay__form_type_edi
 
 const overlayPlace = document.querySelector('.overlay_type_place');
 export const formPlace = overlayPlace.querySelector('.overlay__form_type_add-place');
+
+const overlayAvatar = document.querySelector('.overlay_type_avatar');
+export const formAvatar = overlayAvatar.querySelector('.overlay__form_type_avatar');
 
 
 export const initialCardsList = [

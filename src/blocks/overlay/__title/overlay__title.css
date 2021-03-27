@@ -7,13 +7,11 @@
   line-height: 22px;
   -webkit-font-smoothing: antialiased;
   color: #000000;
-  margin-bottom: 65px;
 }
 
 @media screen and (min-width: 768px) {
   .overlay__title {
     font-size: 24px;
     line-height: 29px;
-    margin-bottom: 38px;
   }
 }
