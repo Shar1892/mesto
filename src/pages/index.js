@@ -88,23 +88,17 @@ popupAvatar.setEventListeners();
 const popupImageRemove = new PopupWithConfirm('.overlay_type_image-remove', (data) => {
 
   api.removeCard(data.id)
-    .then(() => {data.element.remove()})
+    .then(() => {
+      data.element.remove();
+      popupImageRemove.close();
+    })
     .catch((err) => {
       console.log(err);
     });
 
-  popupImageRemove.close()
 }, api);
 popupImageRemove.setEventListeners();
 
-
-//const card = new Card (data, '#element', popupImage.open.bind(popupImage));
-
-/*function generateCard(data) {
-  const card = new Card (data, '#element', popupImage.open.bind(popupImage));
-  const cardElement = card.createCard();
-  return cardElement;
-}*/
 
 const generateCard = (...args) => new Card(...args);
 
@@ -112,7 +106,8 @@ const popupPlace = new PopupWithForm('.overlay_type_place', (data) => {
 
   api.createCard(data)
     .then((res) => {
-      generateCard(res, '#element', popupImage.open.bind(popupImage), popupImageRemove, api).showCard('.elements');
+
+      generateCard(res, '#element', popupImage.open.bind(popupImage), popupImageRemove, api, userInfo.id).showCard('.elements');
 
       popupPlace.close();
     })
@@ -132,15 +127,6 @@ const userInfo = new UserInfo({
   activitySelector: '.profile__activity',
   avatarSelector: '.profile__avatar'
 }, api);
-
-api.getUser()
-  .then((res) => {
-    userInfo.showUserInfo(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 
 
 editProfileButton.addEventListener('click', () => {
@@ -164,17 +150,20 @@ avatarHover.addEventListener('click', () => {
 })
 
 
-api.getCards()
-  .then((cards) => {
 
-    const cardList = new Section(cards, (item) => {
+Promise.all([
+  api.getUser(),
+  api.getCards()
+])
+  .then(([userData, initalCards]) => {
+    userInfo.showUserInfo(userData);
 
-      const cardElement = generateCard(item, '#element', popupImage.open.bind(popupImage), popupImageRemove, api).createCard();
+    const cardList = new Section(initalCards, (item) => {
+      const cardElement = generateCard(item, '#element', popupImage.open.bind(popupImage), popupImageRemove, api, userInfo.id).createCard();
       cardList.addItem(cardElement);
-      }, '.elements');
+    }, '.elements');
     
     cardList.renderItems();
-
   })
   .catch((err) => {
     console.log(err);

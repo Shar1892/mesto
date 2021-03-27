@@ -1,6 +1,6 @@
 export class Card {
 
-  constructor(data, selector, handleCardClick, confirmPopup, api) {
+  constructor(data, selector, handleCardClick, confirmPopup, api, userId) {
 
     this.image = data.link;
     this.name = data.name;
@@ -12,6 +12,7 @@ export class Card {
     this._openImage = handleCardClick;
     this._confirmPopup = confirmPopup;
     this._api = api;
+    this._userId = userId
 
   }
 
@@ -71,11 +72,7 @@ export class Card {
 
 
   _checkIsLiked() {
-    for (let i = 0; i < this._likers.length; i++) {
-      if (this._likers[i]._id === '30559038ce74f4ed4698cbf8') {
-        return true;
-      }
-    } 
+    return this._likers.some((liker) => liker._id === this._userId); 
   }
 
   _showLike() {
@@ -85,7 +82,7 @@ export class Card {
   }
 
   _hideBasket() {
-    if (this._ownerId !== '30559038ce74f4ed4698cbf8') {
+    if (this._ownerId !== this._userId) {
       this.basket.classList.add('element__basket_type_hidden');
     }
   }
